@@ -64,6 +64,10 @@ dependencies {
     implementation Libs.Common.okHttpInterceptor
     implementation Libs.Common.gson
 
+    implementation Libs.Jetpack.room
+    implementation Libs.Jetpack.roomKtx
+    kapt Libs.Jetpack.roomCompiler
+
     implementation Libs.Jetpack.navigationFragment
     implementation Libs.Jetpack.navigationUiKtx
 
