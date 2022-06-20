@@ -4,4 +4,7 @@
     <string name="label_public">عمومی</string>
     <string name="label_saved">ذخیره شده</string>
     <string name="message_validity">اعتبار پیام</string>
+    <string name="label_cancel">انصراف</string>
+    <string name="label_delete">حذف</string>
+    <string name="message_empty_list">هیچ پیامی جهت نمایش موجود نیست</string>
 </resources>
