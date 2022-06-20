@@ -2,7 +2,7 @@ package com.shahin.showmessages.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.shahin.showmessages.ui.list.MessageViewModel
+import com.shahin.showmessages.ui.pager.MessageViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
