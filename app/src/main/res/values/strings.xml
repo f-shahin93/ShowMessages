@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ShowMessages</string>
+    <string name="my_messages">پیام های من</string>
+    <string name="label_public">عمومی</string>
+    <string name="label_saved">ذخیره شده</string>
+    <string name="message_validity">اعتبار پیام</string>
 </resources>
