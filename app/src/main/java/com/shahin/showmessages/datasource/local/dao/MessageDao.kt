@@ -28,7 +28,7 @@ interface MessageDao {
     @Query("UPDATE my_message SET saved = NOT saved WHERE id = :id")
     fun updateSavedStatusMessage(id: String): Int
 
-    @Query("DELETE from my_message WHERE id IN (:id)")
-    fun deleteMessage(id: List<String>)
+    @Query("DELETE FROM my_message WHERE id IN (:ids)")
+    suspend fun deleteMessage(ids: List<String>)
 
 }
