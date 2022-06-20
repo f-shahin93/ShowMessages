@@ -16,10 +16,19 @@ interface MessageDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(messageEntity: MessageEntity)
 
-    @Query("SELECT * FROM my_message")
-    fun getMessages(): Flow<List<MessageEntity>>
+    @Query("SELECT * FROM my_message ORDER BY  unread = 1 DESC , unread = 0 DESC, id DESC")
+    fun getAllMessages(): Flow<List<MessageEntity>>
 
     @Query("SELECT COUNT(*) FROM my_message")
     fun getCountMessages(): Int
+
+    @Query("UPDATE my_message SET unread = 0 WHERE id = :id")
+    fun updateReadStatusMessage(id: String): Int
+
+    @Query("UPDATE my_message SET saved = NOT saved WHERE id = :id")
+    fun updateSavedStatusMessage(id: String): Int
+
+    @Query("DELETE from my_message WHERE id IN (:id)")
+    fun deleteMessage(id: List<String>)
 
 }

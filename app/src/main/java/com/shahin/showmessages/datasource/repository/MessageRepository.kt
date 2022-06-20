@@ -12,7 +12,10 @@ import javax.inject.Inject
 
 
 interface MessageRepository {
-    fun getMessagesAll(): Flow<DataResult<List<Message>>>
+    suspend fun getMessagesAll(): Flow<List<Message>>
+    fun deleteMessages(id: List<String>)
+    fun savedMessage(id: String)
+    fun readStatusUpdateMessage(id: String)
 }
 
 class DefaultMessageRepository @Inject constructor(
@@ -20,23 +23,28 @@ class DefaultMessageRepository @Inject constructor(
     private val messageDao: MessageDao
 ) : MessageRepository {
 
-    override fun getMessagesAll(): Flow<DataResult<List<Message>>> = flow {
+    override suspend fun getMessagesAll(): Flow<List<Message>> {
         getMessagesRemote()
-        emit(DataResult.Loading())
-        try {
-            withTimeout(3000) {
-                messageDao.getMessages().collect {
-                    emit(DataResult.Loading(it.map { it.toDomain() }))
-                    emit(DataResult.Success(it.map { it.toDomain() }))
-                }
-            }
-        } catch (ex: Exception) {
-            emit(DataResult.Error(ex))
+        return messageDao.getAllMessages().map { it.map { it.toDomain() } }
+    }
+
+    override fun deleteMessages(id: List<String>) {
+        CoroutineScope(Dispatchers.IO + CoroutineExceptionHandler { _, _ -> }).launch {
+            messageDao.deleteMessage(id)
         }
+    }
 
-    }.catch { ex -> emit(DataResult.Error(ex)) }
-        .flowOn(Dispatchers.IO)
+    override fun savedMessage(id: String) {
+        CoroutineScope(Dispatchers.IO + CoroutineExceptionHandler { _, _ -> }).launch {
+            messageDao.updateSavedStatusMessage(id = id)
+        }
+    }
 
+    override fun readStatusUpdateMessage(id: String) {
+        CoroutineScope(Dispatchers.IO + CoroutineExceptionHandler { _, _ -> }).launch {
+            messageDao.updateReadStatusMessage(id)
+        }
+    }
 
     private fun getMessagesRemote() {
         CoroutineScope(Dispatchers.IO + CoroutineExceptionHandler { _, _ -> }).launch {

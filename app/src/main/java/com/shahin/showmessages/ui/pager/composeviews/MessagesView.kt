@@ -1,4 +1,4 @@
-package com.shahin.showmessages.ui.pager
+package com.shahin.showmessages.ui.pager.composeviews
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -28,14 +28,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.shahin.showmessages.R
 import com.shahin.showmessages.datasource.model.Message
+import com.shahin.showmessages.ui.pager.MessagesActions
 import com.shahin.showmessages.ui.utils.LoadImageByUrl
 
 
 @Composable
-fun PublicMessages(
+fun MessagesListView(
     messagesList: List<Message>,
-    onShareClicked: () -> Unit,
-    onSaveClicked: () -> Unit
+    actions: MessagesActions,
 ) {
     LazyColumn(
         modifier = Modifier.padding(
@@ -44,7 +44,7 @@ fun PublicMessages(
         )
     ) {
         items(items = messagesList) { item ->
-            ItemMessage(item, onShareClicked = onShareClicked, onSaveClicked = onSaveClicked)
+            ItemMessage(item, actions = actions)
         }
     }
 
@@ -53,8 +53,7 @@ fun PublicMessages(
 @Composable
 private fun ItemMessage(
     message: Message,
-    onShareClicked: () -> Unit,
-    onSaveClicked: () -> Unit
+    actions: MessagesActions,
 ) {
     val isExpanded = remember { mutableStateOf(false) }
     Card(
@@ -75,19 +74,31 @@ private fun ItemMessage(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ) {
-                IconButton(onClick = { onShareClicked.invoke() }) {
+                IconButton(onClick = {
+                    actions.onShareClicked.invoke(
+                        message.title,
+                        message.description
+                    )
+                }) {
                     Icon(
                         imageVector = Icons.Outlined.Share,
                         contentDescription = null
                     )
                 }
-                IconButton(onClick = { onSaveClicked.invoke() }) {
+                IconButton(onClick = { actions.onSaveClicked.invoke(message.id) }) {
                     Icon(
                         painter = painterResource(
                             id = if (message.saved) {
                                 R.drawable.ic_bookmark_fill
                             } else {
                                 R.drawable.ic_bookmark_outline
+                            }
+                        ),
+                        tint = colorResource(
+                            id = if (message.saved) {
+                                R.color.secondary_color
+                            } else {
+                                R.color.black
                             }
                         ),
                         contentDescription = null
@@ -174,17 +185,22 @@ private fun ItemMessage(
                         .weight(0.25f)
                         .size(24.dp),
                     onClick = {
+                        if (message.unread) {
+                            actions.onReadStatusUpdateItem.invoke(message.id)
+                        }
                         isExpanded.value = isExpanded.value.not()
                     },
                 ) {
                     Icon(
-                        modifier = Modifier.fillMaxSize().rotate(
-                            if (isExpanded.value){
-                                180f
-                            }else{
-                                0f
-                            }
-                        ),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .rotate(
+                                if (isExpanded.value) {
+                                    180f
+                                } else {
+                                    0f
+                                }
+                            ),
                         painter = painterResource(id = R.drawable.ic_outline_expand_circle_down_24),
                         tint = colorResource(id = R.color.secondary_color_variant),
                         contentDescription = null

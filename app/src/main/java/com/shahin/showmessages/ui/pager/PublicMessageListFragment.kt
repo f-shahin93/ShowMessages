@@ -1,4 +1,4 @@
-package com.shahin.showmessages.ui
+package com.shahin.showmessages.ui.pager
 
 import android.content.Context
 import android.os.Bundle
@@ -9,14 +9,15 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.ViewModelProvider
+import com.shahin.showmessages.datasource.model.SingleEvent
 import com.shahin.showmessages.di.ViewModelFactory
+import com.shahin.showmessages.ui.MainActivity
 import com.shahin.showmessages.ui.base.BaseComposeFragment
-import com.shahin.showmessages.ui.pager.MessageViewModel
-import com.shahin.showmessages.ui.pager.PublicMessages
+import com.shahin.showmessages.ui.pager.composeviews.MessagesListView
 import com.shahin.showmessages.ui.utils.MessageTheme
 import javax.inject.Inject
 
-class MessagesListFragment : BaseComposeFragment() {
+class PublicMessageListFragment : BaseComposeFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -27,6 +28,8 @@ class MessagesListFragment : BaseComposeFragment() {
             viewModelFactory
         )[MessageViewModel::class.java]
     }
+
+    private lateinit var actions: MessagesActions
 
     override fun onAttach(context: Context) {
         (requireActivity() as MainActivity).mainActivitySubComponent.inject(this)
@@ -51,12 +54,18 @@ class MessagesListFragment : BaseComposeFragment() {
 
     @Composable
     private fun ListScreen() {
-        val list = viewModel.messagesSuccess.observeAsState()
-        PublicMessages(list.value ?: emptyList(), {}, {})
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        actions = MessagesActions(
+            onShareClicked = { title, txtMessage ->
+                viewModel.onNeededToShare.postValue(SingleEvent(title to txtMessage))
+            },
+            onSaveClicked = { id -> viewModel.onSavedMessage(id) },
+            onReadStatusUpdateItem = { id -> viewModel.onReadMessageStatusUpdate(id) },
+            onDeleteItem = { ids -> viewModel.onDeleteMessage(ids) },
+        )
+
+        val list = viewModel.messagesSuccess.observeAsState()
+        MessagesListView(list.value ?: emptyList(), actions)
     }
 
 }
