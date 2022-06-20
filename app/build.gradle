@@ -1,11 +1,9 @@
-import com.shahin.buildsrc.Android
-import com.shahin.buildsrc.Libs
+import com.shahin.buildsrc.*
 
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
 }
@@ -32,6 +30,7 @@ android {
     buildFeatures {
         dataBinding true
         viewBinding true
+        compose true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
@@ -39,6 +38,10 @@ android {
     }
     kotlinOptions {
         jvmTarget = '11'
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion Versions.compose
+        kotlinCompilerVersion Versions.kotlin
     }
 }
 
@@ -70,6 +73,23 @@ dependencies {
 
     implementation Libs.Jetpack.navigationFragment
     implementation Libs.Jetpack.navigationUiKtx
+
+    implementation  Libs.Jetpack.composeUi
+    implementation  Libs.Jetpack.composeMaterial
+    implementation  Libs.Jetpack.composeMaterialThemeAdapter
+    implementation  Libs.Jetpack.composeUiUtil
+    implementation  Libs.Jetpack.composeConstraintlayout
+    implementation  Libs.Jetpack.composeUiToolingPreview
+    implementation  Libs.Jetpack.composeLivedata
+    debugImplementation  Libs.Jetpack.composeUiTooling
+    debugImplementation  Libs.Jetpack.composeUiTestManifest
+    implementation  Libs.Jetpack.coil
+    implementation  Libs.Jetpack.accompanistPager
+    implementation  Libs.Jetpack.accompanistPagerIndicators
+    implementation Libs.Jetpack.composeRuntime
+    implementation Libs.Jetpack.composeRuntimeLivedata
+    implementation Libs.Jetpack.composeFoundation
+    implementation Libs.Jetpack.composeFoundationLayout
 
     implementation Libs.Common.glide
     kapt Libs.Common.glideCompiler

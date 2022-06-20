@@ -29,6 +29,23 @@ object Libs {
         const val pagination = "androidx.paging:paging-runtime-ktx:${Versions.paging}"
         const val workManager = "androidx.work:work-runtime-ktx:${Versions.workManager}"
         const val legacySupport = "androidx.legacy:legacy-support-v4:${Versions.legacySupport}"
+
+        const val composeUi = "androidx.compose.ui:ui:${Versions.compose}"
+        const val composeRuntime = "androidx.compose.runtime:runtime:${Versions.compose}"
+        const val composeRuntimeLivedata = "androidx.compose.runtime:runtime-livedata:${Versions.compose}"
+        const val composeFoundation = "androidx.compose.foundation:foundation:${Versions.compose}"
+        const val composeFoundationLayout = "androidx.compose.foundation:foundation-layout:${Versions.compose}"
+        const val composeMaterial = "androidx.compose.material:material:${Versions.compose}"
+        const val composeMaterialThemeAdapter = "com.google.android.material:compose-theme-adapter:${Versions.compose}"
+        const val composeUiUtil = "androidx.compose.ui:ui-util:${Versions.compose}"
+        const val composeConstraintlayout = "androidx.constraintlayout:constraintlayout-compose:${Versions.constraintLayoutComposeVersion}"
+        const val composeUiToolingPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
+        const val composeLivedata = "androidx.compose.runtime:runtime-livedata:${Versions.compose}"
+        const val composeUiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
+        const val composeUiTestManifest = "androidx.compose.ui:ui-test-manifest:${Versions.compose}"
+        const val coil = "io.coil-kt:coil-compose:${Versions.coil}"
+        const val accompanistPager = "com.google.accompanist:accompanist-pager:${Versions.accompanistPager}"
+        const val accompanistPagerIndicators = "com.google.accompanist:accompanist-pager-indicators:${Versions.accompanistPager}"
     }
 
     object Common {
