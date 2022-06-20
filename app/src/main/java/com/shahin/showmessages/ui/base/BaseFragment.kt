@@ -11,7 +11,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 
-
+/**
+ * Implement this class for using in compose fragment.
+ *  @see [com.shahin.showmessages.ui.pager.PublicMessageListFragment]
+ *  @see [com.shahin.showmessages.ui.pager.SavedMessageListFragment]
+ */
 abstract class BaseComposeFragment : Fragment() {
 
     private var _composeRootView: ComposeView? = null
@@ -43,6 +47,9 @@ abstract class BaseComposeFragment : Fragment() {
 }
 
 
+/**
+ * Implement this class for using in dataBinding fragments.
+ */
 abstract class BaseFragment<B : ViewDataBinding>(@LayoutRes layoutId: Int) : Fragment(layoutId) {
 
     private var _binding: B? = null
