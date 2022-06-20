@@ -3,7 +3,7 @@ package com.shahin.showmessages.datasource.local.model
 import androidx.room.*
 
 
-@Entity(tableName = "message")
+@Entity(tableName = "my_message")
 data class MessageEntity(
     @PrimaryKey
     val id: String,
@@ -12,7 +12,7 @@ data class MessageEntity(
     @ColumnInfo(name = "description")
     val description: String,
     @ColumnInfo(name = "image")
-    val image: String,
+    val image: String?,
     @ColumnInfo(name = "unread")
     val unread: Boolean,
     @ColumnInfo(name = "saved")

@@ -16,10 +16,10 @@ interface MessageDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(messageEntity: MessageEntity)
 
-    @Query("SELECT * FROM message")
+    @Query("SELECT * FROM my_message")
     fun getMessages(): Flow<List<MessageEntity>>
 
-    @Query("SELECT COUNT(*) FROM message")
+    @Query("SELECT COUNT(*) FROM my_message")
     fun getCountMessages(): Int
 
 }

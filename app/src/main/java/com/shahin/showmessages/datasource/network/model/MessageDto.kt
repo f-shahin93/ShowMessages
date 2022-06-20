@@ -15,7 +15,7 @@ data class MessageDto(
     @SerializedName("description")
     val description: String,
     @SerializedName("image")
-    val image: String,
+    val image: String? = null,
     @SerializedName("unread")
     val unread: Boolean,
 )
