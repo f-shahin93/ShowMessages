@@ -151,7 +151,9 @@ private fun ItemMessage(
                 Spacer(modifier = Modifier.height(dimensionResource(R.dimen.margin_small)))
                 DescriptionAndImageView(isExpanded, message)
                 Divider(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = dimensionResource(id = R.dimen.margin_medium)),
                     color = colorResource(id = R.color.divider_color)
                 )
                 BottomMessageItemView(message, isExpanded, actions)
